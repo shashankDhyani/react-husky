@@ -1,12 +1,11 @@
-# Getting Started with Create React App
+# Husky with React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
-## Available Scripts
+## Create a react app.
 
-In the project directory, you can run:
-
-### `npm start`
+Create a react app using command 
+### `npx create-react-app react-husky`
 
 Runs the app in the development mode.\
 Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
@@ -14,57 +13,70 @@ Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
 The page will reload when you make changes.\
 You may also see any lint errors in the console.
 
-### `npm test`
+## Install Linter eslint
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+ESLint analyzes your code for potential errors, and enforces coding standards while improving code quality.
 
-### `npm run build`
+It can also help you as a developer to identify and fix common mistakes, use best practices, and maintain consistency across your codebase.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+You can integrate ESLint seamlessly into your React projects, providing real-time feedback and improving your overall code quality.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+* npm install eslint eslint-plugin-react eslint-plugin-react-hooks --save-dev
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
-### `npm run eject`
+### configure ESLint 
+Create a .eslintrc.json file and paste below linting configuration:
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+{
+    "env": {
+      "browser": true,
+      "es2021": true
+    },
+    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react-hooks/recommended"],
+    "parserOptions": {
+      "ecmaVersion": 12,
+      "sourceType": "module",
+      "ecmaFeatures": {
+        "jsx": true
+      }
+    },
+    "plugins": ["react", "react-hooks"],
+    "rules": {
+      //add customize rules here as per your project's needs
+    }
+}  
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+## Install Husky
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+* npm i --save-dev husky
+* npx husky install
+* npx husky add .husky/pre-commit (adds precommit hook)
 
-## Learn More
+This will create a pre commit hook pre-commimt under .husky folder.
+This hook will run when you do git commit.
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## install lint-staged
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Linting makes more sense when run before committing your code. By doing so you can ensure no errors go into the repository and enforce code style. But running a lint process on a whole project is slow, and linting results can be irrelevant. Ultimately you only want to lint files that will be committed.
 
-### Code Splitting
+lint-staged will stop your git commit when there is an error on linting your files
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+* npm i --save-dev lint-staged
 
-### Analyzing the Bundle Size
+## Update package.json
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+{
+  "scripts": {
+    "lint": "eslint . --fix --max-warnings=0",
+    "format": "prettier . --write",
+    "prepare": "husky install",
+  },
+   "lint-staged": {
+    "*.{js,jsx,css,md,scss,html,json}": "npm run format",
+    "*.{js,jsx}": "npm run lint"
+  }
+}
 
-### Making a Progressive Web App
+add these lines into your package.json . It tells lint-staged what command should be run with specific files.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
