@@ -1,8 +1,6 @@
 # Husky with React App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
-
-## Create a react app.
+## Create a react app for husky demo.
 
 Create a react app using command 
 ### `npx create-react-app react-husky`
@@ -24,28 +22,11 @@ You can integrate ESLint seamlessly into your React projects, providing real-tim
 * npm install eslint eslint-plugin-react eslint-plugin-react-hooks --save-dev
 
 
-### configure ESLint 
+### Configure ESLint 
 Create a .eslintrc.json file and paste below linting configuration:
 
-{
-    "env": {
-      "browser": true,
-      "es2021": true
-    },
-    "extends": ["eslint:recommended", "plugin:react/recommended", "plugin:react-hooks/recommended"],
-    "parserOptions": {
-      "ecmaVersion": 12,
-      "sourceType": "module",
-      "ecmaFeatures": {
-        "jsx": true
-      }
-    },
-    "plugins": ["react", "react-hooks"],
-    "rules": {
-      //add customize rules here as per your project's needs
-    }
-}  
 
+![EsLint Config](<img/elint config.png>)
 
 ## Install Husky
 
@@ -54,7 +35,12 @@ Create a .eslintrc.json file and paste below linting configuration:
 * npx husky add .husky/pre-commit (adds precommit hook)
 
 This will create a pre commit hook pre-commimt under .husky folder.
+
+![Husky Folder](<img/husky folder and precommit.png>)
+
 This hook will run when you do git commit.
+
+
 
 ## install lint-staged
 
@@ -66,17 +52,9 @@ lint-staged will stop your git commit when there is an error on linting your fil
 
 ## Update package.json
 
-{
-  "scripts": {
-    "lint": "eslint . --fix --max-warnings=0",
-    "format": "prettier . --write",
-    "prepare": "husky install",
-  },
-   "lint-staged": {
-    "*.{js,jsx,css,md,scss,html,json}": "npm run format",
-    "*.{js,jsx}": "npm run lint"
-  }
-}
+![Package.json](<img/package.json snip.png>)
+
 
 add these lines into your package.json . It tells lint-staged what command should be run with specific files.
 
+![Precommit Hook](<img/precommit file.png>)
